@@ -8,88 +8,86 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #0f0f13;
-    --surface: #18181f;
-    --surface2: #22222d;
-    --border: #2e2e3e;
-    --accent: #7c5cfc;
-    --accent2: #a78bfa;
-    --green: #34d399;
-    --red: #f87171;
-    --orange: #fb923c;
-    --text: #e8e8f0;
-    --muted: #7070a0;
-    --done-text: #444460;
+    --bg: #f4f5f7;
+    --surface: #ffffff;
+    --surface2: #f0f1f5;
+    --border: #e2e4ea;
+    --accent: #6d4aff;
+    --accent2: #8b6fff;
+    --green: #10b981;
+    --red: #ef4444;
+    --orange: #f97316;
+    --text: #1a1a2e;
+    --muted: #8a8aaa;
+    --done-text: #b0b0c8;
   }
   body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 2rem 1.5rem; }
-  h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.5rem, 4vw, 2.4rem); font-weight: 800; letter-spacing: -0.03em; background: linear-gradient(135deg, #fff 30%, var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.5rem, 4vw, 2.4rem); font-weight: 800; letter-spacing: -0.03em; background: linear-gradient(135deg, #3b1fa8 0%, var(--accent2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   .header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; max-width: 1200px; margin-inline: auto; }
   .header-left p { color: var(--muted); font-size: 0.85rem; margin-top: 0.3rem; display: flex; align-items: center; gap: 0.4rem; }
   .sync-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #fbbf24; transition: background 0.3s; flex-shrink: 0; }
-  .sync-dot.online { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .sync-dot.online { background: var(--green); box-shadow: 0 0 6px rgba(16,185,129,0.4); }
   .stats-bar { display: flex; gap: 1rem; flex-wrap: wrap; max-width: 1200px; margin: 0 auto 1.5rem; }
-  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0.8rem 1.4rem; flex: 1; min-width: 100px; }
-  .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.2rem; }
-  .stat-value { font-size: 1.6rem; font-weight: 700; color: var(--accent2); }
-  .search-bar { max-width: 1200px; margin: 0 auto 1.5rem; display: flex; align-items: center; gap: 0.75rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0.75rem 1.2rem; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1rem 1.4rem; flex: 1; min-width: 110px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.25rem; font-weight: 600; }
+  .stat-value { font-size: 1.7rem; font-weight: 700; color: var(--accent); }
+  .search-bar { max-width: 1200px; margin: 0 auto 1.5rem; display: flex; align-items: center; gap: 0.75rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0.75rem 1.2rem; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
   .search-bar input { flex: 1; background: none; border: none; outline: none; color: var(--text); font-family: inherit; font-size: 0.95rem; }
   .search-bar input::placeholder { color: var(--muted); }
   .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.65rem 1.3rem; border-radius: 10px; border: none; cursor: pointer; font-family: inherit; font-size: 0.9rem; font-weight: 600; transition: all 0.15s; line-height: 1; }
-  .btn-primary { background: var(--accent); color: #fff; }
-  .btn-primary:hover { background: #6b4de0; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(124,92,252,0.4); }
+  .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 4px 14px rgba(109,74,255,0.3); }
+  .btn-primary:hover { background: #5a39e0; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(109,74,255,0.4); }
   .btn-ghost { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
   .btn-ghost:hover { color: var(--text); border-color: var(--muted); }
-  .table-wrap { max-width: 1200px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .table-wrap { max-width: 1200px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
   table { width: 100%; border-collapse: collapse; }
   thead { background: var(--surface2); }
-  thead th { padding: 0.9rem 1.2rem; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 600; text-align: left; white-space: nowrap; }
+  thead th { padding: 0.9rem 1.2rem; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 700; text-align: left; white-space: nowrap; border-bottom: 1px solid var(--border); }
   tbody tr { border-top: 1px solid var(--border); transition: background 0.1s; }
-  tbody tr:hover { background: rgba(124,92,252,0.05); }
+  tbody tr:hover { background: #f8f7ff; }
   td { padding: 0.9rem 1.2rem; font-size: 0.9rem; vertical-align: middle; }
   .client-name { font-weight: 600; color: var(--text); }
-  .task-text { color: #b0b0d0; }
+  .task-text { color: #555570; }
   .task-done .client-name, .task-done .task-text { color: var(--done-text); text-decoration: line-through; }
-  .task-done .deadline-chip { opacity: 0.4; text-decoration: line-through; }
-  .badge { display: inline-block; padding: 0.2rem 0.7rem; border-radius: 999px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.03em; }
-  .badge-pending { background: rgba(251,191,36,0.15); color: #fbbf24; }
-  .badge-done { background: rgba(52,211,153,0.15); color: var(--green); }
-  .badge-custom { background: rgba(124,92,252,0.15); color: var(--accent2); }
-  .assignee-chip { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 0.15rem 0.5rem; font-size: 0.8rem; color: var(--muted); }
-  .deadline-chip { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.8rem; padding: 0.2rem 0.6rem; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--muted); white-space: nowrap; }
-  .deadline-chip.overdue { background: rgba(248,113,113,0.1); border-color: var(--red); color: var(--red); }
-  .deadline-chip.soon { background: rgba(251,146,60,0.1); border-color: var(--orange); color: var(--orange); }
-  .deadline-chip.ok { background: rgba(52,211,153,0.1); border-color: var(--green); color: var(--green); }
+  .task-done .deadline-chip { opacity: 0.5; text-decoration: line-through; }
+  .badge { display: inline-block; padding: 0.22rem 0.75rem; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em; }
+  .badge-pending { background: #fff8e1; color: #b45309; border: 1px solid #fde68a; }
+  .badge-done { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+  .badge-custom { background: #ede9fe; color: #5b21b6; border: 1px solid #c4b5fd; }
+  .assignee-chip { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.8rem; color: var(--muted); font-weight: 500; }
+  .deadline-chip { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.8rem; padding: 0.22rem 0.65rem; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--muted); white-space: nowrap; font-weight: 500; }
+  .deadline-chip.overdue { background: #fff1f1; border-color: #fca5a5; color: var(--red); }
+  .deadline-chip.soon { background: #fff7ed; border-color: #fdba74; color: var(--orange); }
+  .deadline-chip.ok { background: #ecfdf5; border-color: #6ee7b7; color: var(--green); }
   .actions { display: flex; gap: 0.4rem; justify-content: center; }
   .icon-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--muted); transition: all 0.15s; }
-  .icon-btn.green:hover { background: rgba(52,211,153,0.1); color: var(--green); border-color: var(--green); }
-  .icon-btn.blue:hover { background: rgba(96,165,250,0.1); color: #60a5fa; border-color: #60a5fa; }
-  .icon-btn.red:hover { background: rgba(248,113,113,0.1); color: var(--red); border-color: var(--red); }
+  .icon-btn.green:hover { background: #ecfdf5; color: var(--green); border-color: #6ee7b7; }
+  .icon-btn.blue:hover { background: #eff6ff; color: #3b82f6; border-color: #93c5fd; }
+  .icon-btn.red:hover { background: #fff1f1; color: var(--red); border-color: #fca5a5; }
   .empty-state { text-align: center; padding: 4rem 2rem; color: var(--muted); }
   .loading-row td { text-align: center; padding: 3rem; color: var(--muted); }
-  .spinner { display: inline-block; width: 24px; height: 24px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 8px; vertical-align: middle; }
+  .spinner { display: inline-block; width: 22px; height: 22px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 8px; vertical-align: middle; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 1rem; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+  .overlay { position: fixed; inset: 0; background: rgba(30,20,60,0.35); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 1rem; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
   .overlay.open { opacity: 1; pointer-events: all; }
-  .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; transform: translateY(20px) scale(0.97); transition: transform 0.2s; box-shadow: 0 25px 60px rgba(0,0,0,0.6); }
+  .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; transform: translateY(20px) scale(0.97); transition: transform 0.2s; box-shadow: 0 25px 60px rgba(0,0,0,0.18); }
   .overlay.open .modal { transform: translateY(0) scale(1); }
   .modal-header { padding: 1.5rem 1.5rem 1rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--surface); z-index: 1; }
-  .modal-header h2 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; }
+  .modal-header h2 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--text); }
   .modal-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
-  .field label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+  .field label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
   .field input, .field textarea, .field select { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 0.65rem 0.9rem; color: var(--text); font-family: inherit; font-size: 0.9rem; outline: none; transition: border-color 0.15s; resize: vertical; }
-  .field input[type="date"] { color-scheme: dark; }
-  .field select option { background: var(--bg); }
-  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(124,92,252,0.15); }
+  .field input[type="date"] { color-scheme: light; }
+  .field select option { background: var(--surface); }
+  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(109,74,255,0.12); background: #fff; }
   .modal-footer { padding: 1rem 1.5rem 1.5rem; display: flex; gap: 0.75rem; border-top: 1px solid var(--border); }
   .modal-footer .btn { flex: 1; justify-content: center; }
-  .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); color: var(--text); padding: 0.8rem 1.2rem; border-radius: 10px; font-size: 0.88rem; transform: translateY(80px); opacity: 0; transition: all 0.3s cubic-bezier(.34,1.56,.64,1); z-index: 200; box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+  .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--text); color: #fff; padding: 0.8rem 1.2rem; border-radius: 10px; font-size: 0.88rem; transform: translateY(80px); opacity: 0; transition: all 0.3s cubic-bezier(.34,1.56,.64,1); z-index: 200; box-shadow: 0 8px 30px rgba(0,0,0,0.15); border-left: 3px solid var(--accent2); }
   .toast.show { transform: translateY(0); opacity: 1; }
   .notes-tooltip { position: relative; display: inline-flex; }
-  .notes-tooltip .tip { visibility: hidden; opacity: 0; background: #1a1a2e; border: 1px solid var(--border); color: var(--text); font-size: 0.78rem; border-radius: 8px; padding: 0.5rem 0.75rem; position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); max-width: 220px; white-space: normal; z-index: 50; transition: opacity 0.15s; pointer-events: none; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+  .notes-tooltip .tip { visibility: hidden; opacity: 0; background: var(--text); color: #fff; font-size: 0.78rem; border-radius: 8px; padding: 0.5rem 0.75rem; position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); max-width: 220px; white-space: normal; z-index: 50; transition: opacity 0.15s; pointer-events: none; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
   .notes-tooltip:hover .tip { visibility: visible; opacity: 1; }
-  @media (max-width: 700px) {
-    thead th:nth-child(3), td:nth-child(3) { display: none; }
-  }
+  @media (max-width: 700px) { thead th:nth-child(3), td:nth-child(3) { display: none; } }
 </style>
 </head>
 <body>
@@ -107,7 +105,7 @@
 
 <div class="stats-bar">
   <div class="stat"><div class="stat-label">Total</div><div class="stat-value" id="stat-total">—</div></div>
-  <div class="stat"><div class="stat-label">Pendentes</div><div class="stat-value" style="color:#fbbf24" id="stat-pending">—</div></div>
+  <div class="stat"><div class="stat-label">Pendentes</div><div class="stat-value" style="color:#d97706" id="stat-pending">—</div></div>
   <div class="stat"><div class="stat-label">Concluídas</div><div class="stat-value" style="color:var(--green)" id="stat-done">—</div></div>
   <div class="stat"><div class="stat-label">Em Atraso</div><div class="stat-value" style="color:var(--red)" id="stat-overdue">—</div></div>
 </div>
@@ -135,7 +133,6 @@
   </table>
 </div>
 
-<!-- MODAL -->
 <div class="overlay" id="overlay">
   <div class="modal">
     <div class="modal-header">
@@ -187,7 +184,6 @@
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const tasksRef = collection(db, 'tarefas');
-
   let allTasks = [];
   let editId = null;
 
@@ -234,7 +230,6 @@
       (t.task||'').toLowerCase().includes(q) ||
       (t.notes||'').toLowerCase().includes(q)
     );
-
     const today = new Date(); today.setHours(0,0,0,0);
     const done = allTasks.filter(t => t.status === 'Feito').length;
     const overdue = allTasks.filter(t => t.status !== 'Feito' && t.deadline && new Date(t.deadline + 'T00:00:00') < today).length;
@@ -248,20 +243,16 @@
       tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><p>' + (allTasks.length ? 'Nenhum resultado encontrado.' : 'Ainda não há tarefas. Clica em "Nova Tarefa" para começar!') + '</p></div></td></tr>';
       return;
     }
-
     tbody.innerHTML = filtered.map(t => {
       const isDone = t.status === 'Feito';
       let bc = 'badge-pending', bl = t.status || 'Pendente';
       if (isDone) bc = 'badge-done';
       else if (t.status && t.status !== 'Pendente') bc = 'badge-custom';
-
-      const noteIcon = t.notes ? '<div class="notes-tooltip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent2);cursor:help"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span class="tip">' + esc(t.notes) + '</span></div>' : '';
-
+      const noteIcon = t.notes ? '<div class="notes-tooltip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent);cursor:help"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span class="tip">' + esc(t.notes) + '</span></div>' : '';
       const dl = deadlineInfo(t.deadline, isDone);
       const deadlineCell = dl
         ? '<span class="deadline-chip ' + dl.cls + '"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' + esc(dl.label) + '</span>'
         : '<span style="color:var(--muted);font-size:0.8rem">—</span>';
-
       return '<tr class="' + (isDone ? 'task-done' : '') + '">' +
         '<td><span class="client-name">' + esc(t.client) + '</span></td>' +
         '<td><div style="display:flex;align-items:center;gap:.5rem"><span class="task-text">' + esc(t.task) + '</span>' + noteIcon + '</div></td>' +
@@ -305,11 +296,9 @@
     const task = document.getElementById('f-task').value.trim();
     if (!client || !task) { showToast('Preenche o cliente e a tarefa!'); return; }
     const btn = document.getElementById('btnGuardar');
-    btn.disabled = true;
-    btn.textContent = 'A guardar...';
+    btn.disabled = true; btn.textContent = 'A guardar...';
     const data = {
-      client,
-      task,
+      client, task,
       assignee: document.getElementById('f-assignee').value.trim(),
       deadline: document.getElementById('f-deadline').value || '',
       status: document.getElementById('f-status').value,
