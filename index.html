@@ -91,11 +91,18 @@
   .dot-done     { background: var(--green); }
 
   .assignee-chip { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.8rem; color: var(--muted); font-weight: 500; }
-  .assignee-checks { display: flex; flex-direction: column; gap: 0.5rem; }
-  .check-opt { display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 0.75rem; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.15s; font-size: 0.88rem; font-weight: 500; background: var(--bg); }
-  .check-opt:hover { background: #f3f0ff; border-color: var(--accent); }
+  .assignee-dropdown { position: relative; }
+  .assignee-trigger { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 0.65rem 0.9rem; color: var(--text); font-family: inherit; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; text-align: left; transition: border-color 0.15s; }
+  .assignee-trigger:focus, .assignee-trigger.open { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(109,74,255,0.12); background: #fff; }
+  .assignee-trigger .trigger-text { flex: 1; color: var(--muted); }
+  .assignee-trigger .trigger-text.has-value { color: var(--text); font-weight: 500; }
+  .assignee-menu { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); z-index: 200; overflow: hidden; display: none; }
+  .assignee-menu.open { display: block; }
+  .assignee-checks { padding: 0.4rem; display: flex; flex-direction: column; gap: 0.2rem; }
+  .check-opt { display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 0.75rem; border-radius: 8px; cursor: pointer; transition: all 0.15s; font-size: 0.88rem; font-weight: 500; }
+  .check-opt:hover { background: #f3f0ff; }
   .check-opt input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px; cursor: pointer; flex-shrink: 0; }
-  .check-opt:has(input:checked) { background: #f3f0ff; border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .check-opt:has(input:checked) { background: #f3f0ff; color: var(--accent); font-weight: 600; }
   .deadline-chip { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.8rem; padding: 0.22rem 0.65rem; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--muted); white-space: nowrap; font-weight: 500; }
   .deadline-chip.overdue { background: #fff1f1; border-color: #fca5a5; color: var(--red); }
   .deadline-chip.soon { background: #fff7ed; border-color: #fdba74; color: var(--orange); }
@@ -202,14 +209,21 @@
     <div class="modal-header">
       <h2 id="modalTitle">Nova Tarefa</h2>
       <button class="icon-btn" id="btnCloseModal" style="border:none">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="field"><label>Cliente *</label><input type="text" id="f-client" placeholder="Nome do cliente"></div>
-      <div class="field"><label>Tarefa *</label><textarea id="f-task" rows="2" placeholder="Descrição da tarefa"></textarea></div>
-      <div class="field">
-        <label>Responsável pela Tarefa <span style="font-weight:400;text-transform:none;font-size:0.75rem;color:var(--muted)"></span></label>
+        <label>Responsável pela Tarefa</label>
+        <div class="assignee-dropdown">
+          <button type="button" class="assignee-trigger" id="assigneeTrigger">
+            <span class="trigger-text" id="assigneeTriggerText">— Sem responsável —</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="assignee-menu" id="assigneeMenu">
+            <div class="assignee-checks">
+              <label class="check-opt"><input type="checkbox" name="assignee" value="Tiago Fachada"><span>Tiago Fachada</span></label>
+              <label class="check-opt"><input type="checkbox" name="assignee" value="Tiago Pereira"><span>Tiago Pereira</span></label>
+              <label class="check-opt"><input type="checkbox" name="assignee" value="Miguel Leitão"><span>Miguel Leitão</span></label>
+              <label class="check-opt"><input type="checkbox" name="assignee" value="Vânia Costa"><span>Vânia Costa</span></label>
+            </div>
+          </div>
+        </div>
         <div class="assignee-checks">
           <label class="check-opt"><input type="checkbox" name="assignee" value="Tiago Fachada"><span>Tiago Fachada</span></label>
           <label class="check-opt"><input type="checkbox" name="assignee" value="Tiago Pereira"><span>Tiago Pereira</span></label>
@@ -424,6 +438,7 @@
       document.querySelectorAll('input[name="assignee"]').forEach(cb => cb.checked = false);
       document.getElementById('f-status').value = '';
     }
+    updateAssigneeTrigger();
     document.getElementById('overlay').classList.add('open');
     setTimeout(() => document.getElementById('f-client').focus(), 200);
   }
@@ -460,6 +475,29 @@
   }
 
   document.getElementById('btnNovaTarefa').addEventListener('click', () => openModal());
+
+  // Assignee dropdown toggle
+  document.getElementById("assigneeTrigger").addEventListener("click", (e) => {
+    e.stopPropagation();
+    document.getElementById("assigneeMenu").classList.toggle("open");
+    document.getElementById("assigneeTrigger").classList.toggle("open");
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".assignee-dropdown")) {
+      document.getElementById("assigneeMenu").classList.remove("open");
+      document.getElementById("assigneeTrigger").classList.remove("open");
+    }
+  });
+
+  function updateAssigneeTrigger() {
+    const checked = Array.from(document.querySelectorAll("input[name=assignee]:checked")).map(c => c.value);
+    const txt = document.getElementById("assigneeTriggerText");
+    if (checked.length) { txt.textContent = checked.join(", "); txt.classList.add("has-value"); }
+    else { txt.textContent = "— Sem responsável —"; txt.classList.remove("has-value"); }
+  }
+
+  document.querySelectorAll("input[name=assignee]").forEach(cb => cb.addEventListener("change", updateAssigneeTrigger));
   document.getElementById('btnCloseModal').addEventListener('click', closeModal);
   document.getElementById('btnCancelar').addEventListener('click', closeModal);
   document.getElementById('btnGuardar').addEventListener('click', saveTask);
