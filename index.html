@@ -121,8 +121,8 @@
   .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(109,74,255,0.12); background: #fff; }
   .modal-footer { padding: 1rem 1.5rem 1.5rem; display: flex; gap: 0.75rem; border-top: 1px solid var(--border); }
   .modal-footer .btn { flex: 1; justify-content: center; }
-  .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--text); color: #fff; padding: 0.8rem 1.2rem; border-radius: 10px; font-size: 0.88rem; transform: translateY(80px); opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(.34,1.56,.64,1); z-index: 9998; box-shadow: 0 8px 30px rgba(0,0,0,0.15); border-left: 3px solid var(--accent2); }
-  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast { position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%) translateY(-80px); background: var(--text); color: #fff; padding: 0.8rem 1.2rem; border-radius: 10px; font-size: 0.88rem; opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(.34,1.56,.64,1); z-index: 9998; box-shadow: 0 8px 30px rgba(0,0,0,0.15); border-left: 3px solid var(--accent2); }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
   .notes-tooltip { position: relative; display: inline-flex; }
   .notes-tooltip .tip { visibility: hidden; opacity: 0; background: var(--text); color: #fff; font-size: 0.78rem; border-radius: 8px; padding: 0.5rem 0.75rem; position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); max-width: 220px; white-space: normal; z-index: 50; transition: opacity 0.15s; pointer-events: none; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
   .notes-tooltip:hover .tip { visibility: visible; opacity: 1; }
