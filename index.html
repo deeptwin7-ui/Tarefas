@@ -181,7 +181,47 @@
       </button>
     </div>
     <div class="modal-body">
-      <div class="field"><label>Cliente *</label><input type="text" id="f-client" placeholder="Nome do cliente"></div>
+      <div class="field"><label>Cliente *</label>
+        <select id="f-client">
+          <option value="">— Selecionar cliente —</option>
+          <option value="0400 - N1">0400 - N1</option>
+          <option value="0402 - BA">0402 - BA</option>
+          <option value="0403 - AFTERHOUSE">0403 - AFTERHOUSE</option>
+          <option value="0405 - TOPCHALLENGE">0405 - TOPCHALLENGE</option>
+          <option value="1332 - TOPAMBITION">1332 - TOPAMBITION</option>
+          <option value="1331 - More Taste">1331 - More Taste</option>
+          <option value="0982 - MIND">0982 - MIND</option>
+          <option value="2298 - SOCIEDADE AGRICOLA DE FRUJAIS">2298 - SOCIEDADE AGRICOLA DE FRUJAIS</option>
+          <option value="0943 - Petrin">0943 - Petrin</option>
+          <option value="0920 - BIOSURFIT">0920 - BIOSURFIT</option>
+          <option value="2397 - Encosta Alta">2397 - Encosta Alta</option>
+          <option value="1708 - Alfastandard">1708 - Alfastandard</option>
+          <option value="1363 - Outdoit">1363 - Outdoit</option>
+          <option value="Associação Combater O Cancro">Associação Combater O Cancro</option>
+          <option value="0881 - PY">0881 - PY</option>
+          <option value="0880 - OGER">0880 - OGER</option>
+          <option value="0882 - IMOSLEN">0882 - IMOSLEN</option>
+          <option value="0879 - MELHOR ESTRATÉGIA">0879 - MELHOR ESTRATÉGIA</option>
+          <option value="1854 - FOREST BAY">1854 - FOREST BAY</option>
+          <option value="1457 - Sky Valet Portugal">1457 - Sky Valet Portugal</option>
+          <option value="1614 - Famataíde">1614 - Famataíde</option>
+          <option value="1681 - Verão D'Improviso">1681 - Verão D'Improviso</option>
+          <option value="Sociedade Agrícola &amp; Agroturismo Unipessoal Lda">Sociedade Agrícola &amp; Agroturismo Unipessoal Lda</option>
+          <option value="1531 - AFS">1531 - AFS</option>
+          <option value="2375 - SUBFUNDO 2">2375 - SUBFUNDO 2</option>
+          <option value="2385 - SUBFUNDO 1">2385 - SUBFUNDO 1</option>
+          <option value="2330 - AI MEDICAL">2330 - AI MEDICAL</option>
+          <option value="2250 - ASK Marginal">2250 - ASK Marginal</option>
+          <option value="1315 - Ask, SA">1315 - Ask, SA</option>
+          <option value="1317 - Ask Patrimónios">1317 - Ask Patrimónios</option>
+          <option value="1318 - Ask IV - Mediação de Seguros">1318 - Ask IV - Mediação de Seguros</option>
+          <option value="1316 - ISQ - Sociedade de Capital de Risco">1316 - ISQ - Sociedade de Capital de Risco</option>
+          <option value="2320 - Scalepharm">2320 - Scalepharm</option>
+          <option value="2191 - Lab Análises Clinicas Dra Giselia P Cunha">2191 - Lab Análises Clinicas Dra Giselia P Cunha</option>
+          <option value="2335 - PACE">2335 - PACE</option>
+          <option value="2340 - Hipnose">2340 - Hipnose</option>
+        </select>
+      </div>
       <div class="field"><label>Tarefa *</label><textarea id="f-task" rows="2" placeholder="Descrição da tarefa"></textarea></div>
       <div class="field">
         <label>Responsável pela Tarefa</label>
@@ -426,7 +466,7 @@
     }
     updateAssigneeLabel();
     document.getElementById('overlay').classList.add('open');
-    setTimeout(() => document.getElementById('f-client').focus(), 200);
+    setTimeout(() => document.getElementById('f-task').focus(), 200);
   }
 
   function closeModal() {
