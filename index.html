@@ -214,20 +214,14 @@
         </select>
       </div>
       <div class="field"><label>Data de Conclusão</label><input type="date" id="f-deadline"></div>
-      <div class="field"><label>Status</label>
-        <select id="f-status">
-          <option value="">Pendente</option>
-          <option value="Em Progresso">Em Progresso</option>
-          <option value="Feito">Feito</option>
-        </select>
-      </div>
+      <input type="hidden" id="f-status" value="">
       <div class="field"><label>Notas Adicionais</label><textarea id="f-notes" rows="3" placeholder="Notas, observações..."></textarea></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" id="btnCancelar">Cancelar</button>
       <button class="btn btn-primary" id="btnGuardar">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Guardar na Cloud
+        Adicionar Tarefa
       </button>
     </div>
   </div>
@@ -450,7 +444,7 @@
       closeModal();
     } catch(e) { showToast('Erro ao guardar.'); }
     btn.disabled = false;
-    btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Guardar na Cloud';
+    btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Adicionar Tarefa';
   }
 
   function showToast(msg) {
