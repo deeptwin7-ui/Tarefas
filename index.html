@@ -477,23 +477,53 @@
     editId = null;
   }
 
+  // Email map — add remaining emails when ready
+  const EMAILS = {
+    'Tiago Fachada':  null,
+    'Tiago Pereira':  null,
+    'Miguel Leitão':  'miguel.leitao@btocnet.com',
+    'Vânia Costa':    null,
+  };
+
+  async function sendEmail(name, task, client, deadline) {
+    const to = EMAILS[name];
+    if (!to) return;
+    try {
+      await fetch('https://tarefasemail.btocteam.workers.dev', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ to, name, task, client, deadline: deadline || 'Sem data' })
+      });
+    } catch (e) { console.warn('Email não enviado:', e); }
+  }
+
   async function saveTask() {
     const client = document.getElementById('f-client').value.trim();
     const task   = document.getElementById('f-task').value.trim();
     if (!client || !task) { showToast('Preenche o cliente e a tarefa!'); return; }
     const btn = document.getElementById('btnGuardar');
     btn.disabled = true; btn.textContent = 'A guardar...';
+    const assignees = getSelectedAssignees();
+    const deadline  = document.getElementById('f-deadline').value || '';
     const data = {
-      client, task,
-      assignee: getSelectedAssignees(),
-      deadline: document.getElementById('f-deadline').value || '',
+      client, task, assignee: assignees, deadline,
       status: editId ? (allTasks.find(t => t.id === editId)?.status || '') : '',
       notes: document.getElementById('f-notes').value.trim(),
       updatedAt: serverTimestamp()
     };
     try {
-      if (editId) { await updateDoc(doc(db, 'tarefas', editId), data); showToast('Tarefa atualizada!'); }
-      else        { await addDoc(tasksRef, { ...data, createdAt: serverTimestamp() }); showToast('Tarefa adicionada! ☁️'); }
+      if (editId) {
+        const prev = allTasks.find(t => t.id === editId);
+        const prevAssignees = Array.isArray(prev?.assignee) ? prev.assignee : (prev?.assignee ? [prev.assignee] : []);
+        await updateDoc(doc(db, 'tarefas', editId), data);
+        const newAssignees = assignees.filter(a => !prevAssignees.includes(a));
+        for (const name of newAssignees) await sendEmail(name, task, client, deadline);
+        showToast('Tarefa atualizada!');
+      } else {
+        await addDoc(tasksRef, { ...data, createdAt: serverTimestamp() });
+        for (const name of assignees) await sendEmail(name, task, client, deadline);
+        showToast('Tarefa adicionada! ☁️');
+      }
       closeModal();
     } catch { showToast('Erro ao guardar.'); }
     btn.disabled = false;
