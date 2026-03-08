@@ -409,6 +409,14 @@
         showToast('Tarefa removida.');
       }
     }
+    if (action === 'openNote') {
+      currentNoteId = id;
+      const task = tasks.find(t => t.id === id);
+      if (!task) return;
+      document.getElementById('noteModalTitle').textContent = 'Notas — ' + task.client;
+      document.getElementById('notesText').value = task.notes || '';
+      document.getElementById('notesOverlay').classList.add('open');
+    }
   });
 
   // ── Assignee dropdown ──────────────────────────────────────────
@@ -574,16 +582,7 @@
   // ── Notes Modal ─────────────────────────────────────────────────────
   let currentNoteId = null;
 
-  document.addEventListener('click', e => {
-    const btn = e.target.closest('[data-action="openNote"]');
-    if (!btn) return;
-    currentNoteId = btn.dataset.id;
-    const task = tasks.find(t => t.id === currentNoteId);
-    if (!task) return;
-    document.getElementById('noteModalTitle').textContent = 'Notas — ' + task.client;
-    document.getElementById('notesText').value = task.notes || '';
-    document.getElementById('notesOverlay').classList.add('open');
-  });
+
 
   document.getElementById('btnCloseNotes').addEventListener('click', () => {
     document.getElementById('notesOverlay').classList.remove('open');
