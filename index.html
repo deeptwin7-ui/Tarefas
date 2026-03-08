@@ -288,46 +288,6 @@
     'Feito': { label: 'Feito', cls: 'done' },
   };
 
-
-  const EMAIL_MAP = {
-    'Miguel Leitão': 'miguel.leitao@btocnet.com',
-  };
-
-  async function sendEmailNotification(data) {
-    const assignees = Array.isArray(data.assignee) ? data.assignee : (data.assignee ? [data.assignee] : []);
-    const recipients = assignees
-      .filter(a => EMAIL_MAP[a])
-      .map(a => ({ Email: EMAIL_MAP[a], Name: a }));
-    if (!recipients.length) return;
-
-    await fetch('https://api.mailjet.com/v3.1/send', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Basic ' + btoa('629995d37163d08b79f05081d74e601a:f935a8bbdce961688a8e4a24aa07f371')
-      },
-      body: JSON.stringify({
-        Messages: [{
-          From: { Email: 'btocteam@gmail.com', Name: 'BTOC Tarefas' },
-          To: recipients,
-          Subject: '📋 Nova Tarefa: ' + data.client,
-          HTMLBody: `
-            <div style="font-family:sans-serif;max-width:500px;margin:0 auto">
-              <h2 style="color:#6d4aff">Nova Tarefa Atribuída</h2>
-              <table style="width:100%;border-collapse:collapse">
-                <tr><td style="padding:8px;font-weight:bold;color:#555">Cliente</td><td style="padding:8px">${data.client}</td></tr>
-                <tr style="background:#f5f5f5"><td style="padding:8px;font-weight:bold;color:#555">Tarefa</td><td style="padding:8px">${data.task}</td></tr>
-                <tr><td style="padding:8px;font-weight:bold;color:#555">Responsável</td><td style="padding:8px">${assignees.join(', ')}</td></tr>
-                <tr style="background:#f5f5f5"><td style="padding:8px;font-weight:bold;color:#555">Prazo</td><td style="padding:8px">${data.deadline || '—'}</td></tr>
-                <tr><td style="padding:8px;font-weight:bold;color:#555">Notas</td><td style="padding:8px">${data.notes || '—'}</td></tr>
-              </table>
-            </div>
-          `
-        }]
-      })
-    });
-  }
-
   onSnapshot(tasksRef, snap => {
     allTasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     allTasks.sort((a, b) => (a.status === 'Feito' ? 1 : 0) - (b.status === 'Feito' ? 1 : 0));
@@ -504,9 +464,8 @@
       await updateDoc(doc(db, 'tarefas', editId), data);
       showToast('Tarefa atualizada!');
     } else {
-      const docRef = await addDoc(tasksRef, { ...data, status: '', createdAt: serverTimestamp() });
+      await addDoc(tasksRef, { ...data, status: '', createdAt: serverTimestamp() });
       showToast('Tarefa criada!');
-      sendEmailNotification(data).catch(console.error);
     }
     overlay.classList.remove('open');
   };
