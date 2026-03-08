@@ -351,19 +351,14 @@
       return `<tr class="${isDone ? 'task-done' : ''}">
         <td><span class="client-name">${esc(t.client)}</span></td>
         <td>
-          <div style="display:flex;align-items:center;gap:8px">
-            <span class="task-text">${esc(t.task)}</span>
-            <div class="notes-tooltip" onclick="window.openNotes('${t.id}')">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:${t.notes ? 'var(--accent)' : 'var(--muted)'};cursor:pointer"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-              <span class="tip">${t.notes ? esc(t.notes) : 'Sem notas. Clique para adicionar.'}</span>
-            </div>
-          </div>
+          <span class="task-text">${esc(t.task)}</span>
         </td>
         <td>${assigneeHTML || '—'}</td>
         <td>${dl ? `<span class="deadline-chip ${dl.cls}">${esc(dl.label)}</span>` : '—'}</td>
         <td><button class="status-btn ${meta.cls}" onclick="window.openStatusPortal('${t.id}', this)">${meta.label} ▾</button></td>
         <td>
           <div class="actions">
+            <button class="icon-btn purple" onclick="window.openNotes('${t.id}')" title="Notas" style="${t.notes ? 'background:#f3f0ff;color:var(--accent);border-color:#c4b5fd;' : ''}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></button>
             <button class="icon-btn blue" onclick="window.editTask('${t.id}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
             <button class="icon-btn red" onclick="window.deleteTaskUI('${t.id}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
           </div>
