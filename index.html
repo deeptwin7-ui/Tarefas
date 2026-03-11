@@ -676,26 +676,30 @@
     editId = null;
   }
 
-  // ── Email via Cloudflare Worker (key segura no servidor) ───────
-  const WORKER_URL = 'https://btocemail.deep-twin7.workers.dev/';
+  // ── EmailJS e Gravação ──────────────────────────────────────────
+  const EMAILJS_SERVICE  = 'service_6rvn33h';
+  const EMAILJS_TEMPLATE = 'template_0mwhq1q';
+  const EMAILJS_KEY      = 'ZkRFx3yGH-xnC1m5e';
 
   const EMAILS = {
-    'Tiago Fachada': null,
-    'Tiago Pereira': null,
-    'Miguel Leitão': 'miguel.leitao@btocnet.com',
-    'Vânia Costa':   null,
+    'Tiago Fachada':  null,
+    'Tiago Pereira':  null,
+    'Miguel Leitão':  'miguel.leitao@btocnet.com',
+    'Vânia Costa':    null,
   };
 
   async function sendEmail(name, task, client, deadline) {
     const to = EMAILS[name];
     if (!to) return;
     try {
-      const res = await fetch(WORKER_URL, {
+      await fetch('https://api.emailjs.com/api/v1.0/email/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, task, client, deadline: deadline || 'Sem data', to })
+        body: JSON.stringify({
+          service_id: EMAILJS_SERVICE, template_id: EMAILJS_TEMPLATE, user_id: EMAILJS_KEY,
+          template_params: { to_email: to, name, task, client, deadline: deadline || 'Sem data' }
+        })
       });
-      if (!res.ok) console.warn('Worker erro:', await res.text());
     } catch (e) { console.warn('Email não enviado:', e); }
   }
 
